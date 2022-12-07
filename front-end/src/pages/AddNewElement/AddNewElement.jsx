@@ -4,25 +4,38 @@ import axios from "axios";
 import "./AddNewElement.scss";
 
 function AddNewElement() {
-  const baseURL = "";
+  const baseURL = "http://localhost:8099/user";
   const [isEmpty, setIsEmpty] = useState(false);
   const [newElementCreated, setNewElementCreated] = useState(false);
+  const [message, setMessage] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    const firstName = e.target[0].value;
-    const lastName = e.target[1].value;
-    const phoneNumber = e.target[2].value;
-    const email = e.target[3].value;
-    if (firstName == "" || phoneNumber == "") {
+    const newFirstName = e.target[0].value;
+    const newLastName = e.target[1].value;
+    const newPhoneNumber = e.target[2].value;
+    const newEmail = e.target[3].value;
+    if (newFirstName == "" || newPhoneNumber == "") {
       setIsEmpty(true);
       setNewElementCreated(false);
     } else {
       for (let i = 0; i <= 3; i++) e.target[i].value = "";
       setIsEmpty(false);
-      setNewElementCreated(true);
-      console.log(
-        firstName + "\n" + lastName + "\n" + phoneNumber + "\n" + email + "\n"
-      );
+      axios
+        .post(baseURL, {
+          firstName: newFirstName,
+          lastName: newLastName,
+          phoneNumber: newPhoneNumber,
+          email: newEmail,
+        })
+        .then((response) => {
+          console.log(response);
+          setMessage(response.data.message);
+          setNewElementCreated(true);
+        })
+        .catch((error) => {
+          setMessage(error.message);
+          setNewElementCreated(true);
+        });
     }
   };
 
@@ -82,7 +95,7 @@ function AddNewElement() {
         (!) You must fill in all the required fields
       </p>
       <p className="warnings" hidden={!newElementCreated}>
-        New element created!
+        {message}
       </p>
     </div>
   );

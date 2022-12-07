@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Home.scss";
 import TableElementObj from "./../../Components/TableElementsObject/TableElementsObject";
 import TableElementsView from "./../../Components/TableElementsView/TableElementsView";
 
 function Home() {
-  const [elementsSQL, setElementsSQL] = useState([
-    new TableElementObj(
-      0,
-      "Luca",
-      "Ferri",
-      "123 456 789",
-      "luca.ferri@solera.com"
-    ),
-    new TableElementObj(
-      1,
-      "Antonio",
-      "Rubia",
-      "123 456 789",
-      "antonio.rubia@solera.com"
-    ),
-    new TableElementObj(
-      2,
-      "Rubén",
-      "Palomo",
-      "123 456 789",
-      "ruben.palomo@solera.com"
-    ),
-  ]);
+  const baseURL = "http://localhost:8099/user";
+  const [elementsSQL, setElementsSQL] = useState([]);
+
+  useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      if (response.data.data == "") return;
+      const parseResponse = JSON.parse(response.data.data);
+      let arrayResponse = [];
+      parseResponse.forEach((element) => {
+        arrayResponse.push(
+          new TableElementObj(
+            element.id,
+            element.firstName,
+            element.lastName,
+            element.phoneNumber,
+            element.email
+          )
+        );
+      });
+      setElementsSQL(arrayResponse);
+    });
+  }, []);
 
   return (
     <div>
