@@ -1,0 +1,47 @@
+.title {
+  margin-bottom: 3%;
+  background-color: rgb(255, 250, 245);
+}
+
+.scroll {
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 80%;
+  height: 60vh;
+  margin: auto;
+  margin-top: 10vh;
+  border: 1px solid black;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.list .listElement {
+  margin: 1%;
+  width: 20%;
+}
+
+.addButtonContainer {
+  display: flex;
+  margin: 1%;
+  margin-right: 12vw;
+  justify-content: right;
+}
+
+.addButton {
+  width: 200%;
+  height: 150%;
+  font-size: xx-large;
+  background-color: rgb(231, 231, 231);
+  border-radius: 10px;
+}
+
+.addButton:hover {
+  background-color: rgb(218, 218, 218);
+  cursor: pointer;
+}
